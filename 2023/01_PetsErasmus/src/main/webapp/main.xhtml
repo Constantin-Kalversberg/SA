@@ -26,22 +26,28 @@
                 <h:form>
                     <div class="form-group row">
                         <div class="col">
+                            <label for="id">ID</label>
+                            <h:inputText id="id" value="#{patient.patient.id}" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
                             <label for="name">Name</label>
-                            <h:inputText id="name" value="#{patient.name}" class="form-control"/>
+                            <h:inputText id="name" value="#{patient.patient.name}" class="form-control"/>
                         </div>
                         <div class="col">
                             <label for="surname">Surname</label>
-                            <h:inputText id="surname" value="#{patient.surname}" class="form-control"/>
+                            <h:inputText id="surname" value="#{patient.patient.surname}" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col">
                             <label for="email">E-mail</label>
-                            <h:inputText id="email" value="#{patient.email}" class="form-control"/>
+                            <h:inputText id="email" value="#{patient.patient.email}" class="form-control"/>
                         </div>
                         <div class="col">
                             <label for="dateOfBirth">Date of birth</label>
-                            <h:inputText type="date" id="dateOfBirth" value="#{patient.dateOfBirth}"
+                            <h:inputText type="date" id="dateOfBirth" value="#{patient.patient.dateOfBirth}"
                                          aria-describedby="dateHelp" class="form-control">
                                 <f:convertDateTime pattern="yyyy-MM-dd"/>
                             </h:inputText>
@@ -51,16 +57,18 @@
                     <div class="form-group row">
                         <div class="col">
                             <label for="details">Details</label>
-                            <h:inputText id="details" value="#{patient.details}" class="form-control"/>
+                            <h:inputText id="details" value="#{patient.patient.details}" class="form-control"/>
                         </div>
                         <div class="col">
                             <label for="doctor">Doctor</label>
-                            <h:selectOneMenu id="doctor" value="#{patient.doctor}" class="form-select" aria-label="Default select example">
+                            <h:selectOneMenu id="doctor" value="#{patient.doctorId}" class="form-select" aria-label="Default select example">
                                 <f:selectItems value="#{doctor.findAll()}" var="doc" itemValue="#{doc.id}" />
                             </h:selectOneMenu>
                         </div>
                     </div>
                     <h:commandButton actionListener="#{patient.savePatient}" value="Add Patient"
+                                     class="btn btn-primary"/><br/>
+                    <h:commandButton actionListener="#{patient.edit}" value="Edit Patient"
                                      class="btn btn-primary"/><br/>
                 </h:form>
             </div>

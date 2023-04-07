@@ -33,16 +33,13 @@ public class PatientJSFBean implements Serializable {
 	private PatientsWithoutDoctor patientsWithoutDoctor;
 
 	private int id;
-	private String name;
-	private String surname;
-	private String email;
-	private Date dateOfBirth;
-	private String details;
-	private int doctor;
+	private Patient patient = new Patient();
+	private int doctorId;
+	private int patientId;
 
 	public List<Patient> findAll() {
 
-		System.out.println(this.doctor);
+		System.out.println(this.doctorId);
 		return patientDAO.findAll();
 	}
 
@@ -54,86 +51,56 @@ public class PatientJSFBean implements Serializable {
 		System.out.println("patient save");
 		LocalDate date = null;
 
-		if (dateOfBirth != null) {
-			date = dateOfBirth.toInstant()
-					.atZone(ZoneId.systemDefault())
-					.toLocalDate();
-		}
-		patientDAO.create(name, surname, email, date, details, doctorDAO.find(doctor));
+		//if (dateOfBirth != null) {
+		//	date = dateOfBirth.toInstant()
+		//			.atZone(ZoneId.systemDefault())
+		//			.toLocalDate();
+		//}
+		patient.setDoctor(doctorDAO.find(doctorId));
+		patientDAO.save(patient);
 		resetValues();
+	}
+
+	public void edit() {
+		patient.setDoctor(doctorDAO.find(doctorId));
+		patientDAO.edit(patient);
 	}
 
 	public void deletePatient(int id) {
 		patientDAO.delete(id);
 	}
+
 	private void resetValues () {
-		name = null;
-		surname = null;
-		email = null;
-		dateOfBirth = null;
-		details = null;
-		doctor = Integer.MIN_VALUE;
+		patient = new Patient();
+		doctorId = Integer.MIN_VALUE;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public String getName() {
-		return name;
+	public int getPatientId() {
+		return patientId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
 	}
 
-	public String getSurname() {
-		return surname;
+	public Patient getPatient() {
+		return patient;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
-	public String getEmail() {
-		return email;
+	public int getDoctorId() {
+		return doctorId;
 	}
 
-	public void setEmail(String email) {
-		System.out.println("sadaf");
-		this.email = email;
-	}
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public PatientDAO getPatientDAO() {
-		return patientDAO;
-	}
-
-	public void setPatientDAO(PatientDAO patientDAO) {
-		this.patientDAO = patientDAO;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-	public int getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(int doctor) {
-		this.doctor = doctor;
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
 	}
 
 }

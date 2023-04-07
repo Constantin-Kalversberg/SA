@@ -18,14 +18,27 @@ public class PatientDAO {
     @PersistenceContext
     EntityManager em;
 
-    public void create(String name, String surname, String email, LocalDate dateOfBirth, String details, Doctor doctor) {
+    public Patient save(Patient patient) {
         //Doctor doc = new Doctor("peter", "peter", null, 12);
-        Patient patient = new Patient(name, surname, email, dateOfBirth, details, doctor);
         System.out.println("Adding new pet "+patient);
         em.persist(patient);
         System.out.println(em.createQuery("select p from Patient p").getResultList().size());
+        return patient;
+    }
 
-
+    public Patient edit(Patient patient) {
+        Patient old = find(patient.getId());
+        if (patient.getName() != null && !patient.getName().isEmpty())
+            old.setName(patient.getName());
+        if(patient.getSurname() != null && !patient.getSurname().isEmpty())
+            old.setSurname(patient.getSurname());
+        if(patient.getEmail() != null && !patient.getEmail().isEmpty())
+            old.setEmail(patient.getEmail());
+        if (patient.getDetails() != null && !patient.getDetails().isEmpty())
+            old.setDetails(patient.getDetails());
+        if(patient.getDoctor() != null)
+            old.setDoctor(patient.getDoctor());
+        return old;
     }
 
     public List<Patient> findAll() {
